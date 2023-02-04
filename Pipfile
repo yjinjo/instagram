@@ -5,10 +5,12 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
 python-dotenv = "*"
+black = "*"
 
 [requires]
 python_version = "3.11"
