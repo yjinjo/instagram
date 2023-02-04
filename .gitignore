@@ -129,8 +129,6 @@ migrations/
 db.sqlite3
 .env
 __pycache__
-static
-media/
 venv
 .venv
 
