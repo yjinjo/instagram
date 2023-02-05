@@ -8,9 +8,11 @@ def signup(request):
     if request.method == "POST":
         form = SingupForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            signed_user = form.save()
             messages.success(request, "Welcome to instagram")
-            return redirect("root")
+            signed_user.send_welcome_email()  # FIXME: Celery로 처리하는 것을 추천(비동기 방식)
+            next_url = request.GET.get("next", "/")
+            return redirect(next_url)
     else:
         form = SingupForm()
 
