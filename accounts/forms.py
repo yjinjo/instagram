@@ -1,5 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    PasswordChangeForm as AuthPasswordChangeForm,
+)
 
 from accounts.models import User
 
@@ -37,3 +40,12 @@ class ProfileForm(forms.ModelForm):
             "phone_number",
             "gender",
         ]
+
+
+class PasswordChangeForm(AuthPasswordChangeForm):
+    def clean_new_password2(self):
+        old_password = self.cleaned_data.get("old_password")
+        new_password2 = super().clean_new_password2()
+        if old_password == new_password2:
+            raise forms.ValidationError("새로운 암호는 기존 암호와는 다르게 입력해주세요.")
+        return new_password2
