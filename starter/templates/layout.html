@@ -27,7 +27,6 @@
       <div class="col-sm-12">
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white">
           <h5 class="my-0 mr-md-auto font-weight-normal">
-
             {#            <img src="{% static "logo.png" %}" alt="Instagram"/>#}
             <a class="text-dark" href="#"> {# TODO: Fill the href to instagram index page #}
               <svg class="mr-0" fill="#262626" height="24" viewBox="0 0 48 48" width="24">
@@ -71,21 +70,25 @@
                     d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
               </svg>
             </a>
-            {#            <a class="p-2 text-dark">#}
-            {#              Profile#}
-            {#            </a>#}
-            <a class="p-2 text-dark" href="#">
+            <a class="p-2 text-dark" href="{% url "profile_edit" %}">
               {# TODO: Fill the href to the profile page #}
-              {{ user }}
-              <span
-                  class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7"
-                  role="link" tabindex="-1" style="width: 24px; height: 24px;">
-              <img alt="프로필 사진"
-                   class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3"
-                   crossorigin="anonymous"
-                   draggable="false"
-                   src="{% static "profile.svg" %}">
-              </span>
+              {#              {{ user }}#}
+              {#              <span#}
+
+              {#                  class="xnz67gz x14yjl9h xudhj91 x18nykt9 xww2gxu x9f619 x1lliihq x2lah0s x6ikm8r x10wlt62 x1n2onr6 x1ykvv32 xougopr x159fomc xnp5s1o x194ut8o x1vzenxt xd7ygy7 xt298gk x1xrz1ek x1s928wv x162n7g1 x2q1x1w x1j6awrg x1n449xj x1m1drc7"#}
+              {#                  role="link" tabindex="-1" style="width: 24px; height: 24px;">#}
+              {#              <img alt="프로필 사진"#}
+
+              {#                   class="x6umtig x1b1mbwd xaqea5y xav7gou xk390pu x5yr21d xpdipgo xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x11njtxf xh8yej3"#}
+              {#                   crossorigin="anonymous"#}
+              {#                   draggable="false"#}
+              {#                   src="{% static "profile.svg" %}">#}
+              {#              </span>#}
+              {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" style="width: 24px; height: 24px;">
+              {% else %}
+                <img src="{% url "pydenticon_image" user.username %}" style="width: 24px; height: 24px;">
+              {% endif %}
             </a>
           </nav>
         </div>
