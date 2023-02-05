@@ -1,7 +1,10 @@
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from .forms import SingupForm
 
+
+login = LoginView.as_view(template_name="accounts/login_form.html")
 
 # Create your views here.
 def signup(request):
