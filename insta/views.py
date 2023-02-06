@@ -7,6 +7,11 @@ from insta.forms import PostForm
 from insta.models import Tag, Post
 
 
+@login_required
+def index(request):
+    return render(request, "insta/index.html", {})
+
+
 # Create your views here.
 @login_required
 def post_new(request):
