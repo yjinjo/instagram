@@ -25,6 +25,9 @@ class Post(models.Model):
             tag_list.append(tag)
         return tag_list
 
+    def get_absolute_url(self):
+        return reverse("insta:post_detail", args=[self.pk])
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
