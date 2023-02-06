@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from insta.forms import PostForm
@@ -9,6 +10,10 @@ from insta.models import Tag, Post
 
 @login_required
 def index(request):
+    post_list = Post.objects.all().filter(
+        Q(author=request.user) | Q(author__in=request.user.following_set.all())
+    )
+
     suggested_user_list = (
         get_user_model()
         .objects.all()
@@ -19,6 +24,7 @@ def index(request):
         request,
         "insta/index.html",
         {
+            "post_list": post_list,
             "suggested_user_list": suggested_user_list,
         },
     )
