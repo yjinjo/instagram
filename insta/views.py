@@ -9,7 +9,19 @@ from insta.models import Tag, Post
 
 @login_required
 def index(request):
-    return render(request, "insta/index.html", {})
+    suggested_user_list = (
+        get_user_model()
+        .objects.all()
+        .exclude(pk=request.user.pk)
+        .exclude(pk__in=request.user.following_set.all())[:3]  # 처음 3명만 보이게 합니다.
+    )
+    return render(
+        request,
+        "insta/index.html",
+        {
+            "suggested_user_list": suggested_user_list,
+        },
+    )
 
 
 # Create your views here.

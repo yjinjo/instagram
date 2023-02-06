@@ -8,6 +8,8 @@
       </div>
       <div class="col-sm-8">
         Timeline
+        <hr>
+        {{ user.following_set.all }}
       </div>
       <div class="col-sm-4">
         {% include "insta/timeline_sidebar.html" %}
