@@ -8,6 +8,7 @@ django = "*"
 django-bootstrap4 = "*"
 django-pydenticon = "*"
 pillow = "*"
+easy-thumbnails = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
