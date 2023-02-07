@@ -25,12 +25,15 @@ def index(request):
         .exclude(pk=request.user.pk)
         .exclude(pk__in=request.user.following_set.all())[:3]  # 처음 3명만 보이게 합니다.
     )
+    comment_form = CommentForm()
+
     return render(
         request,
         "insta/index.html",
         {
             "post_list": post_list,
             "suggested_user_list": suggested_user_list,
+            "comment_form": comment_form,
         },
     )
 
@@ -62,7 +65,10 @@ def post_new(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, "insta/post_detail.html", {"post": post})
+    comment_form = CommentForm()
+    return render(
+        request, "insta/post_detail.html", {"post": post, "comment_form": comment_form}
+    )
 
 
 @login_required
