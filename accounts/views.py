@@ -1,5 +1,6 @@
+import datetime
 from django.contrib import messages
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
@@ -7,13 +8,46 @@ from django.contrib.auth.views import (
     logout_then_login,
     PasswordChangeView as AuthPasswordChangeView,
 )
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils import timezone
 
+from insta.forms import CommentForm
+from insta.models import Post
 from .forms import SingupForm, ProfileForm, PasswordChangeForm
 from .models import User
 
 login = LoginView.as_view(template_name="accounts/login_form.html")
+
+
+@login_required
+def index(request):
+    messages.success(request, "로그인 되었습니다.")
+    timesince = timezone.now() - datetime.timedelta(days=3)
+    post_list = (
+        Post.objects.all()
+        .filter(Q(author=request.user) | Q(author__in=request.user.following_set.all()))
+        .filter(created_at__gte=timesince)
+    )
+
+    suggested_user_list = (
+        get_user_model()
+        .objects.all()
+        .exclude(pk=request.user.pk)
+        .exclude(pk__in=request.user.following_set.all())[:3]  # 처음 3명만 보이게 합니다.
+    )
+    comment_form = CommentForm()
+
+    return render(
+        request,
+        "insta/index.html",
+        {
+            "post_list": post_list,
+            "suggested_user_list": suggested_user_list,
+            "comment_form": comment_form,
+        },
+    )
 
 
 def logout(request):
