@@ -10,6 +10,7 @@ urlpatterns = [
         views.password_change,
         name="password_change",
     ),
+    path("profile/", views.index, name="index"),
     path("signup/", views.signup, name="signup"),
     path("edit/", views.profile_edit, name="profile_edit"),
     re_path(
