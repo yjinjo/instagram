@@ -100,6 +100,16 @@ def comment_new(request, post_pk):
             comment.post = post
             comment.author = request.user
             comment.save()
+
+            if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+                return render(
+                    request,
+                    "insta/_comment.html",
+                    {
+                        "comment": comment,
+                    },
+                )
+
             return redirect(comment.post)
     else:
         form = CommentForm()
