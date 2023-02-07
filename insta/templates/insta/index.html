@@ -1,0 +1,23 @@
+{% extends "insta/layout.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col-sm-12 mb-3">
+        <a href="{% url "insta:post_new" %}" class="btn btn-primary">새 포스팅 쓰기</a>
+      </div>
+      <div class="col-sm-8">
+        {% for post in post_list %}
+          <div class="mb-3">
+            {% include "insta/_post_card.html" %}
+          </div>
+        {% empty %}
+          포스팅이 없습니다.
+        {% endfor %}
+      </div>
+      <div class="col-sm-4">
+        {% include "insta/timeline_sidebar.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
